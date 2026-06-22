@@ -1,0 +1,196 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-display: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+
+  --color-emerald-brand: #0F3D2E;
+  --color-emerald-deep: #0a2a20;
+  --color-ivory: #F7F4EE;
+  --color-gold: #C8A96B;
+  --color-gold-soft: #d9be8b;
+  --color-charcoal: #1F2933;
+  --color-stone-soft: #E8E1D8;
+
+  --shadow-soft: 0 1px 2px rgb(15 61 46 / 0.04), 0 8px 24px -8px rgb(15 61 46 / 0.10);
+  --shadow-card: 0 1px 2px rgb(31 41 51 / 0.04), 0 12px 40px -16px rgb(31 41 51 / 0.18);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+}
+
+:root {
+  --background: #F7F4EE;
+  --foreground: #1F2933;
+  --card: #ffffff;
+  --card-foreground: #1F2933;
+  --primary: #0F3D2E;
+  --primary-foreground: #F7F4EE;
+  --secondary: #E8E1D8;
+  --secondary-foreground: #1F2933;
+  --muted: #E8E1D8;
+  --muted-foreground: #5b6470;
+  --accent: #C8A96B;
+  --accent-foreground: #1F2933;
+  --border: #d9d2c6;
+  --input: #d9d2c6;
+  --ring: #0F3D2E;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--color-charcoal);
+  }
+}
+
+@utility container-x {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  max-width: 80rem;
+  @media (min-width: 768px) { padding-inline: 2rem; }
+}
+
+@utility eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-emerald-brand);
+}
+.eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--color-gold);
+}
+
+@utility btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.95rem 1.6rem;
+  background: var(--color-emerald-brand);
+  color: var(--color-ivory);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  border: 1px solid var(--color-emerald-brand);
+}
+.btn-primary:hover {
+  background: var(--color-emerald-deep);
+  box-shadow: 0 10px 24px -10px rgb(15 61 46 / 0.5);
+  transform: translateY(-1px);
+}
+
+@utility btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.95rem 1.6rem;
+  background: transparent;
+  color: var(--color-ivory);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  border: 1px solid rgb(247 244 238 / 0.5);
+  transition: all 0.3s ease;
+}
+.btn-outline:hover {
+  background: rgb(247 244 238 / 0.08);
+  border-color: var(--color-gold);
+  color: var(--color-gold-soft);
+}
+
+@utility btn-ghost-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.4rem;
+  background: transparent;
+  color: var(--color-emerald-brand);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  border: 1px solid var(--color-emerald-brand);
+  transition: all 0.3s ease;
+}
+.btn-ghost-dark:hover {
+  background: var(--color-emerald-brand);
+  color: var(--color-ivory);
+}
+
+@utility gold-divider {
+  display: block;
+  width: 56px;
+  height: 1px;
+  background: var(--color-gold);
+}
+
+@utility reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes marquee-fade {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
