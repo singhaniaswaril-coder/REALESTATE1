@@ -10,6 +10,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import logoUrl from "../assets/logo.png";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -77,14 +78,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "SPRGlobal — Premium Real Estate & Integrated Communities" },
-      { name: "description", content: "SPRGlobal builds landmark residential, commercial, and integrated township developments crafted for modern Indian luxury living." },
-      { property: "og:title", content: "SPRGlobal — Premium Real Estate" },
+      { title: "Scaling Ventures — Premium Real Estate & Integrated Communities" },
+      { name: "description", content: "Scaling Ventures builds landmark residential, commercial, and integrated township developments crafted for modern Indian luxury living." },
+      { property: "og:title", content: "Scaling Ventures — Premium Real Estate" },
       { property: "og:description", content: "Landmark residential, commercial, and integrated township developments." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
+      { rel: "icon", type: "image/png", href: logoUrl },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" },

@@ -8,16 +8,16 @@
   --font-display: "Cormorant Garamond", "Playfair Display", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
 
-  --color-emerald-brand: #0F3D2E;
-  --color-emerald-deep: #0a2a20;
-  --color-ivory: #F7F4EE;
-  --color-gold: #C8A96B;
-  --color-gold-soft: #d9be8b;
-  --color-charcoal: #1F2933;
-  --color-stone-soft: #E8E1D8;
+  --color-emerald-brand: #0C2A4D;
+  --color-emerald-deep: #081E38;
+  --color-ivory: #FFFFFF;
+  --color-gold: #EF7320;
+  --color-gold-soft: #F89B5A;
+  --color-charcoal: #15233B;
+  --color-stone-soft: #F1F5FB;
 
-  --shadow-soft: 0 1px 2px rgb(15 61 46 / 0.04), 0 8px 24px -8px rgb(15 61 46 / 0.10);
-  --shadow-card: 0 1px 2px rgb(31 41 51 / 0.04), 0 12px 40px -16px rgb(31 41 51 / 0.18);
+  --shadow-soft: 0 1px 2px rgb(12 42 77 / 0.04), 0 8px 24px -8px rgb(12 42 77 / 0.10);
+  --shadow-card: 0 1px 2px rgb(21 35 59 / 0.04), 0 12px 40px -16px rgb(21 35 59 / 0.18);
 }
 
 @theme inline {
@@ -43,21 +43,21 @@
 }
 
 :root {
-  --background: #F7F4EE;
-  --foreground: #1F2933;
+  --background: #FFFFFF;
+  --foreground: #15233B;
   --card: #ffffff;
-  --card-foreground: #1F2933;
-  --primary: #0F3D2E;
-  --primary-foreground: #F7F4EE;
-  --secondary: #E8E1D8;
-  --secondary-foreground: #1F2933;
-  --muted: #E8E1D8;
-  --muted-foreground: #5b6470;
-  --accent: #C8A96B;
-  --accent-foreground: #1F2933;
-  --border: #d9d2c6;
-  --input: #d9d2c6;
-  --ring: #0F3D2E;
+  --card-foreground: #15233B;
+  --primary: #0C2A4D;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F1F5FB;
+  --secondary-foreground: #15233B;
+  --muted: #F1F5FB;
+  --muted-foreground: #5B6B82;
+  --accent: #EF7320;
+  --accent-foreground: #15233B;
+  --border: #E2E8F0;
+  --input: #E2E8F0;
+  --ring: #0C2A4D;
 }
 
 @layer base {
@@ -126,7 +126,7 @@
 }
 .btn-primary:hover {
   background: var(--color-emerald-deep);
-  box-shadow: 0 10px 24px -10px rgb(15 61 46 / 0.5);
+  box-shadow: 0 10px 24px -10px rgb(12 42 77 / 0.5);
   transform: translateY(-1px);
 }
 
@@ -143,11 +143,11 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   border-radius: 2px;
-  border: 1px solid rgb(247 244 238 / 0.5);
+  border: 1px solid rgb(255 255 255 / 0.5);
   transition: all 0.3s ease;
 }
 .btn-outline:hover {
-  background: rgb(247 244 238 / 0.08);
+  background: rgb(255 255 255 / 0.08);
   border-color: var(--color-gold);
   color: var(--color-gold-soft);
 }

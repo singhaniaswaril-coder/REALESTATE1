@@ -18,7 +18,7 @@ export const PROJECTS: Project[] = [
     desc: "Twin-tower residences set across 8 acres of landscaped commons, with skyline-grade 3 and 4 BHK homes." },
   { name: "Lumière Villas", img: pRes2, location: "ECR, Chennai", status: "Selling Fast", tag: "Residential",
     desc: "A private enclave of 42 architect-designed villas with pool-side living and tropical courtyards." },
-  { name: "SPR One Tower", img: pCom1, location: "Guindy, Chennai", status: "Operational", tag: "Commercial",
+  { name: "Scaling One Tower", img: pCom1, location: "Guindy, Chennai", status: "Operational", tag: "Commercial",
     desc: "A 1.4 million sq ft Grade-A glass tower anchoring the city's most active business district." },
   { name: "The Quartier", img: pCom2, location: "Velachery, Chennai", status: "Pre-Leasing", tag: "Commercial",
     desc: "A mixed-use destination of premium retail, F&B and creative workspaces around a central plaza." },
