@@ -8,13 +8,21 @@
   --font-display: "Cormorant Garamond", "Playfair Display", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
 
-  --color-emerald-brand: #0C2A4D;
-  --color-emerald-deep: #081E38;
+  /* Brand: Orange = primary/dominant, Blue = secondary/support, White = base */
+  --color-orange: #EF7320;
+  --color-orange-deep: #D75F12;
+  --color-orange-soft: #F89B5A;
+  --color-blue: #0C2A4D;
+  --color-blue-deep: #081E38;
   --color-ivory: #FFFFFF;
-  --color-gold: #EF7320;
-  --color-gold-soft: #F89B5A;
   --color-charcoal: #15233B;
   --color-stone-soft: #F1F5FB;
+
+  /* Back-compat aliases (orange is now the lead accent) */
+  --color-emerald-brand: #0C2A4D;
+  --color-emerald-deep: #081E38;
+  --color-gold: #EF7320;
+  --color-gold-soft: #F89B5A;
 
   --shadow-soft: 0 1px 2px rgb(12 42 77 / 0.04), 0 8px 24px -8px rgb(12 42 77 / 0.10);
   --shadow-card: 0 1px 2px rgb(21 35 59 / 0.04), 0 12px 40px -16px rgb(21 35 59 / 0.18);
@@ -47,17 +55,19 @@
   --foreground: #15233B;
   --card: #ffffff;
   --card-foreground: #15233B;
-  --primary: #0C2A4D;
+  /* Orange is the dominant brand/primary colour */
+  --primary: #EF7320;
   --primary-foreground: #FFFFFF;
-  --secondary: #F1F5FB;
-  --secondary-foreground: #15233B;
+  /* Blue is the secondary / supporting colour */
+  --secondary: #0C2A4D;
+  --secondary-foreground: #FFFFFF;
   --muted: #F1F5FB;
   --muted-foreground: #5B6B82;
   --accent: #EF7320;
-  --accent-foreground: #15233B;
+  --accent-foreground: #FFFFFF;
   --border: #E2E8F0;
   --input: #E2E8F0;
-  --ring: #0C2A4D;
+  --ring: #EF7320;
 }
 
 @layer base {
@@ -99,13 +109,13 @@
   font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--color-emerald-brand);
+  color: var(--color-orange);
 }
 .eyebrow::before {
   content: "";
   width: 28px;
   height: 1px;
-  background: var(--color-gold);
+  background: var(--color-orange);
 }
 
 @utility btn-primary {
@@ -114,7 +124,7 @@
   justify-content: center;
   gap: 0.5rem;
   padding: 0.95rem 1.6rem;
-  background: var(--color-emerald-brand);
+  background: var(--color-orange);
   color: var(--color-ivory);
   font-size: 0.82rem;
   font-weight: 500;
@@ -122,11 +132,34 @@
   text-transform: uppercase;
   border-radius: 2px;
   transition: all 0.3s ease;
-  border: 1px solid var(--color-emerald-brand);
+  border: 1px solid var(--color-orange);
 }
 .btn-primary:hover {
-  background: var(--color-emerald-deep);
-  box-shadow: 0 10px 24px -10px rgb(12 42 77 / 0.5);
+  background: var(--color-orange-deep);
+  border-color: var(--color-orange-deep);
+  box-shadow: 0 12px 26px -10px rgb(239 115 32 / 0.55);
+  transform: translateY(-1px);
+}
+
+@utility btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.95rem 1.6rem;
+  background: var(--color-blue);
+  color: var(--color-ivory);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  border: 1px solid var(--color-blue);
+}
+.btn-secondary:hover {
+  background: var(--color-blue-deep);
+  border-color: var(--color-blue-deep);
   transform: translateY(-1px);
 }
 
@@ -159,17 +192,17 @@
   gap: 0.5rem;
   padding: 0.85rem 1.4rem;
   background: transparent;
-  color: var(--color-emerald-brand);
+  color: var(--color-orange);
   font-size: 0.78rem;
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   border-radius: 2px;
-  border: 1px solid var(--color-emerald-brand);
+  border: 1px solid var(--color-orange);
   transition: all 0.3s ease;
 }
 .btn-ghost-dark:hover {
-  background: var(--color-emerald-brand);
+  background: var(--color-orange);
   color: var(--color-ivory);
 }
 

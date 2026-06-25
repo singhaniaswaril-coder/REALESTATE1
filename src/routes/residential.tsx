@@ -18,13 +18,13 @@ function ResidentialPage() {
     <CategoryPage
       category="Residential"
       eyebrow="Residential Portfolio"
-      title={"Homes designed for a lifetime — not a season."}
-      intro="From skyline-grade apartments to private villa enclaves, every Scaling Ventures residence is master-planned around light, landscape and lasting craftsmanship. Discover homes built to be inherited."
+      title={"Homes designed for modern living."}
+      intro="Thoughtfully planned residences across Chennai — combining modern design, superior workmanship and long-term value. From our flagship Jai Shankeshwar Apartment to upcoming enclaves, every home is built around comfort and quality."
       highlights={[
-        { v: "12,000+", l: "Homes Delivered" },
-        { v: "18", l: "Residential Addresses" },
-        { v: "8 Acres", l: "Avg. Green Commons" },
-        { v: "A+", l: "Build Quality Grade" },
+        { v: "4", l: "Residential Projects" },
+        { v: "2", l: "Ongoing" },
+        { v: "100%", l: "Vastu Compliant" },
+        { v: "2024", l: "Established" },
       ]}
     />
   );
