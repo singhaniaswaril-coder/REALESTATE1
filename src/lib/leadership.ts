@@ -97,7 +97,7 @@ export const LEADERS: Leader[] = [
   {
     name: "Subhadra Lunawath",
     role: "Director",
-    // No photo supplied — rendered as a brand monogram.
+    // No photo supplied - rendered as a brand monogram.
     summary:
       "A design and marketing specialist who blends creative planning with brand development and interior design.",
     bio: [
@@ -111,7 +111,7 @@ export const LEADERS: Leader[] = [
     name: "Anil Kumar Lunawath",
     role: "Legal Advisor",
     photo: anil,
-    // No bio in the company profile — placeholder copy, please review/replace.
+    // No bio in the company profile - placeholder copy, please review/replace.
     summary:
       "Legal Advisor to Scaling Ventures, guiding the company on regulatory compliance, documentation and transaction governance.",
     bio: [

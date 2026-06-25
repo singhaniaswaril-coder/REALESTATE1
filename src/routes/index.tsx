@@ -13,12 +13,12 @@ import {
   ONGOING_PROJECTS, UPCOMING_PROJECTS, type Project,
 } from "@/lib/projects";
 import { LEADERS, type Leader } from "@/lib/leadership";
-import heroImg from "@/assets/hero-skyline.jpg";
+import heroImg from "@/assets/Cover page new.jpg";
 import aboutImg from "@/assets/scaling-ananta/elevation-02.png";
 import whiteLogo from "@/assets/full_white_logo.png";
 import profilePdf from "@/assets/scaling-ventures-profile.pdf?url";
 
-/* Brand palette — Orange = primary/dominant, Blue = secondary, White = base */
+/* Brand palette - Orange = primary/dominant, Blue = secondary, White = base */
 const ORANGE = "#EF7320";
 const BLUE = "#0C2A4D";
 const BLUE_DEEP = "#081E38";
@@ -32,9 +32,9 @@ const INSTAGRAM_URL = "https://www.instagram.com/";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Scaling Ventures — Modern Construction & Real Estate, Chennai" },
+      { title: "Scaling Ventures - Modern Construction & Real Estate, Chennai" },
       { name: "description", content: "Scaling Ventures is a professionally managed construction and real-estate development firm in Chennai, delivering innovative, sustainable and high-quality residential developments." },
-      { property: "og:title", content: "Scaling Ventures — Modern Construction & Real Estate" },
+      { property: "og:title", content: "Scaling Ventures - Modern Construction & Real Estate" },
       { property: "og:description", content: "Thoughtfully planned residential developments built on excellence, transparency and timely execution." },
     ],
   }),
@@ -247,7 +247,7 @@ function About() {
           <p className="mt-7 text-[15.5px] leading-[1.8]" style={{ color: `${INK}cc` }}>
             Scaling Ventures, established in December 2024, is a professionally managed construction
             and real-estate development firm driven by a vision to become a trusted name in modern
-            construction — through innovative, sustainable and high-quality developments that elevate
+            construction - through innovative, sustainable and high-quality developments that elevate
             lifestyles and communities.
           </p>
           <p className="mt-4 text-[15.5px] leading-[1.8]" style={{ color: `${INK}cc` }}>
@@ -279,7 +279,7 @@ function MissionVision() {
   const cards = [
     {
       k: "Mission",
-      body: "To deliver thoughtfully planned residential projects that combine modern design, superior workmanship and long-term value — with an unwavering commitment to excellence, transparency, timely execution and customer-focused innovation.",
+      body: "To deliver thoughtfully planned residential projects that combine modern design, superior workmanship and long-term value - with an unwavering commitment to excellence, transparency, timely execution and customer-focused innovation.",
     },
     {
       k: "Vision",
@@ -332,7 +332,7 @@ function BrochureDialog({ project }: { project: Project }) {
         <DialogDescription className="sr-only">Project renders and brochure pages for {project.name}.</DialogDescription>
         <div className="relative bg-[#0C2A4D]">
           <div className="aspect-[3/4] sm:aspect-[4/3] w-full grid place-items-center">
-            <img src={images[idx]} alt={`${project.name} — ${idx + 1}`} className="max-h-[78vh] w-full object-contain" />
+            <img src={images[idx]} alt={`${project.name} - ${idx + 1}`} className="max-h-[78vh] w-full object-contain" />
           </div>
           {images.length > 1 && (
             <>
@@ -541,7 +541,7 @@ function Leadership() {
               The team behind Scaling Ventures.
             </h2>
             <p className="mt-6 text-[15.5px] leading-[1.8]" style={{ color: `${INK}bf` }}>
-              A leadership group spanning real estate, finance, logistics, design and law — bound by a
+              A leadership group spanning real estate, finance, logistics, design and law - bound by a
               shared commitment to quality, transparency and long-term value.
             </p>
           </Reveal>
@@ -672,7 +672,7 @@ function Enquiry() {
           </p>
           <div className="mt-10 space-y-5">
             {[
-              { l: "Direct from the developer", v: "No middlemen — you speak to our team." },
+              { l: "Direct from the developer", v: "No middlemen - you speak to our team." },
               { l: "Personal response", v: "Every enquiry is reviewed and answered personally." },
               { l: "Transparent guidance", v: "Clear information on every project and price." },
             ].map((b) => (
@@ -754,7 +754,7 @@ function Footer() {
         <div className="md:col-span-5">
           <Logo className="h-16 md:h-20" />
           <p className="mt-6 text-sm leading-relaxed text-white/65 max-w-sm">
-            Scaling Ventures Pvt. Ltd. — a professionally managed construction and real-estate
+            Scaling Ventures Pvt. Ltd. - a professionally managed construction and real-estate
             development firm, established December 2024, building thoughtfully planned residential
             developments across Chennai.
           </p>

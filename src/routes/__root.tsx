@@ -78,9 +78,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Scaling Ventures — Premium Real Estate & Integrated Communities" },
+      { title: "Scaling Ventures - Premium Real Estate & Integrated Communities" },
       { name: "description", content: "Scaling Ventures builds landmark residential, commercial, and integrated township developments crafted for modern Indian luxury living." },
-      { property: "og:title", content: "Scaling Ventures — Premium Real Estate" },
+      { property: "og:title", content: "Scaling Ventures - Premium Real Estate" },
       { property: "og:description", content: "Landmark residential, commercial, and integrated township developments." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

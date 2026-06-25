@@ -6,7 +6,7 @@ import jaiSouth from "@/assets/jai-shankeshwar/south-elevation.png";
 import anantaElev1 from "@/assets/scaling-ananta/elevation-01.png";
 import anantaElev2 from "@/assets/scaling-ananta/elevation-02.png";
 
-// Brochure page galleries (folder globs — drop more pages in and they appear automatically)
+// Brochure page galleries (folder globs - drop more pages in and they appear automatically)
 function gallery(modules: Record<string, unknown>): string[] {
   return Object.entries(modules)
     .sort(([a], [b]) => a.localeCompare(b))
@@ -58,7 +58,7 @@ export const PROJECTS: Project[] = [
     config: "3 & 4 BHK Luxury Apartments",
     tagline: "A lifestyle of unparalleled comfort and convenience.",
     summary:
-      "Our flagship residence on Vellala Street — a boutique tower of expansive 3 & 4 BHK homes wrapped in refined stone-and-timber elevations, framed balconies and covered parking. Expected completion by Diwali 2026.",
+      "Our flagship residence on Vellala Street - a boutique tower of expansive 3 & 4 BHK homes wrapped in refined stone-and-timber elevations, framed balconies and covered parking. Expected completion by Diwali 2026.",
     highlights: [
       "Spacious 3 & 4 BHK homes",
       "Covered car parking",
@@ -75,12 +75,12 @@ export const PROJECTS: Project[] = [
     area: "Chennai",
     category: "Residential",
     status: "Ongoing",
-    config: "2 BHK Flats — only 8 units",
+    config: "2 BHK Flats - only 8 units",
     tagline: "Own the dream. Live the lifestyle.",
     summary:
-      "An intimate collection of just eight thoughtfully planned 2 BHK homes on Chellappa Street — 100% Vastu-compliant, with a lift, round-the-clock security and covered car parking.",
+      "An intimate collection of just eight thoughtfully planned 2 BHK homes on Chellappa Street - 100% Vastu-compliant, with a lift, round-the-clock security and covered car parking.",
     highlights: [
-      "2 BHK flats — only 8 units",
+      "2 BHK flats - only 8 units",
       "100% Vastu-compliant",
       "Lift & 24/7 security",
       "Covered car parking",
@@ -97,7 +97,7 @@ export const PROJECTS: Project[] = [
     category: "Residential",
     status: "Coming Soon",
     summary:
-      "A new residential landmark taking shape on Vellalar Street — modern homes designed around light, space and long-term value.",
+      "A new residential landmark taking shape on Vellalar Street - modern homes designed around light, space and long-term value.",
   },
   {
     slug: "scaling-arihant-business-centre",
@@ -107,7 +107,7 @@ export const PROJECTS: Project[] = [
     category: "Commercial",
     status: "Coming Soon",
     summary:
-      "A premium Grade-A commercial address coming soon on Hunters Road — workspaces and retail built for ambitious businesses.",
+      "A premium Grade-A commercial address coming soon on Hunters Road - workspaces and retail built for ambitious businesses.",
   },
   {
     slug: "scaling-arihant-enclave",
@@ -117,7 +117,7 @@ export const PROJECTS: Project[] = [
     category: "Residential",
     status: "Coming Soon",
     summary:
-      "A modern residential enclave planned at Shenoy Nagar — thoughtfully master-planned living in one of the city's most connected neighbourhoods.",
+      "A modern residential enclave planned at Shenoy Nagar - thoughtfully master-planned living in one of the city's most connected neighbourhoods.",
   },
 ];
 
