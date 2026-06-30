@@ -17,7 +17,7 @@ function ProjectCard({ p, i }: { p: Project; i: number }) {
           style={!p.image ? { background: `linear-gradient(135deg, ${BLUE} 0%, ${BLUE_DEEP} 60%, #123a63 100%)` } : { background: "#F1F5FB" }}>
           {p.image ? (
             <img src={p.image} alt={p.name} loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-105" />
+              className="w-full h-full object-contain transition-transform duration-[1200ms] group-hover:scale-105" />
           ) : (
             <div className="text-center px-6">
               <Building2 className="mx-auto h-9 w-9 text-white/40" />

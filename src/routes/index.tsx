@@ -362,7 +362,7 @@ function OngoingCard({ p, i }: { p: Project; i: number }) {
       <article className="group bg-white border border-[#E2E8F0] overflow-hidden flex flex-col h-full transition-all duration-500 hover:shadow-[0_24px_60px_-30px_rgba(12,42,77,0.45)] hover:-translate-y-1">
         <div className="relative aspect-[4/3] overflow-hidden bg-[#F1F5FB]">
           <img src={p.image} alt={p.name} loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-105" />
+            className="w-full h-full object-contain transition-transform duration-[1200ms] group-hover:scale-105" />
           <span className="absolute top-4 left-4 px-3 py-1.5 text-[10px] tracking-[0.18em] uppercase text-white"
             style={{ background: "rgba(12,42,77,0.92)" }}>
             Ongoing

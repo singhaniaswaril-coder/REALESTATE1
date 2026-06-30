@@ -56,6 +56,20 @@ export const LEADERS: Leader[] = [
     ],
   },
   {
+    name: "Anil Kumar Lunawath",
+    role: "Legal Advisor",
+    photo: anil,
+    // No bio in the company profile - placeholder copy, please review/replace.
+    summary:
+      "Legal Advisor to Scaling Ventures, guiding the company on regulatory compliance, documentation and transaction governance.",
+    bio: [
+      "Serves as Legal Advisor to Scaling Ventures, overseeing legal and regulatory matters across the company's projects.",
+      "Advises on property documentation, title due diligence and contract governance.",
+      "Ensures statutory and regulatory compliance throughout project planning, execution and delivery.",
+      "Supports transparent, secure and well-structured transactions for every stakeholder.",
+    ],
+  },
+  {
     name: "Kuldeep Tandi",
     role: "Director",
     photo: kuldeep,
@@ -105,20 +119,6 @@ export const LEADERS: Leader[] = [
       "Experienced in Marketing Strategy, Brand Development & Client Engagement.",
       "Skilled in Interior Designing with an eye for modern aesthetics and functional spaces.",
       "Recognized for combining creativity, market insight and innovative design solutions to enhance project value.",
-    ],
-  },
-  {
-    name: "Anil Kumar Lunawath",
-    role: "Legal Advisor",
-    photo: anil,
-    // No bio in the company profile - placeholder copy, please review/replace.
-    summary:
-      "Legal Advisor to Scaling Ventures, guiding the company on regulatory compliance, documentation and transaction governance.",
-    bio: [
-      "Serves as Legal Advisor to Scaling Ventures, overseeing legal and regulatory matters across the company's projects.",
-      "Advises on property documentation, title due diligence and contract governance.",
-      "Ensures statutory and regulatory compliance throughout project planning, execution and delivery.",
-      "Supports transparent, secure and well-structured transactions for every stakeholder.",
     ],
   },
 ];
