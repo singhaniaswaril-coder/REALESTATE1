@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {
   Camera, Zap, Droplets, Sun, Sprout, Smartphone, ShieldCheck, Bath, Trees,
   Car, Compass, Building2, ArrowRight, Download, Instagram, MapPin,
-  ChevronLeft, ChevronRight,
+  ChevronLeft, ChevronRight, Flame,
 } from "lucide-react";
 import {
   Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription,
@@ -54,7 +54,7 @@ const NAV: NavItem[] = [
   { label: "Contact", href: "#contact" },
 ];
 
-function Logo({ className = "h-12 md:h-14" }: { className?: string }) {
+function Logo({ className = "h-16 md:h-20" }: { className?: string }) {
   return (
     <a href="#home" className="inline-flex items-center" aria-label="Scaling Ventures Pvt. Ltd. home">
       <img src={whiteLogo} alt="Scaling Ventures Pvt. Ltd." className={`${className} w-auto`} />
@@ -72,6 +72,7 @@ function Navbar() {
   const solid = scrolled || open;
 
   return (
+    <>
     <header
       className="fixed inset-x-0 top-0 z-50 transition-all duration-500"
       style={{
@@ -108,11 +109,14 @@ function Navbar() {
           </button>
         </div>
       </div>
+      </header>
 
-      {/* Mobile panel */}
+      {/* Mobile panel - rendered outside <header> so its fixed positioning is
+          relative to the viewport (a backdrop-filter ancestor would otherwise
+          become its containing block and collapse it to zero height). */}
       <div
-        className={`lg:hidden fixed inset-x-0 top-[76px] bottom-0 transition-transform duration-500 ${
-          open ? "translate-x-0" : "translate-x-full"
+        className={`lg:hidden fixed inset-x-0 top-[76px] bottom-0 z-50 overflow-y-auto transition-transform duration-500 ${
+          open ? "translate-x-0" : "translate-x-full pointer-events-none"
         }`}
         style={{ background: BLUE }}
       >
@@ -138,7 +142,7 @@ function Navbar() {
           </a>
         </div>
       </div>
-    </header>
+    </>
   );
 }
 
@@ -227,7 +231,7 @@ function About() {
             <img
               src={aboutImg}
               alt="A Scaling Ventures residential development"
-              className="w-full h-[520px] object-cover"
+              className="w-full h-auto object-contain"
               loading="lazy"
             />
             <div className="absolute -bottom-6 -right-6 hidden md:block p-6 max-w-[260px]" style={{ background: ORANGE }}>
@@ -567,6 +571,7 @@ const AMENITIES = [
   { icon: Bath, t: "Driver's Toilet", d: "Thoughtful provision for staff and drivers." },
   { icon: Trees, t: "Turf at Terrace", d: "An all-weather recreation surface up top." },
   { icon: Car, t: "Visitor's Car Parking", d: "Dedicated, hassle-free parking for guests." },
+  { icon: Flame, t: "Fire Safety", d: "Fire detection and safety systems across the building." },
   { icon: Compass, t: "100% Vastu Compliance", d: "Homes planned in full alignment with Vastu." },
 ];
 
@@ -586,16 +591,16 @@ function Amenities() {
             </p>
           </Reveal>
         </div>
-        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[#E2E8F0] border border-[#E2E8F0]">
+        <div className="mt-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-[#E2E8F0] border border-[#E2E8F0]">
           {AMENITIES.map((a, i) => (
             <Reveal key={a.t} delay={i * 40}>
-              <div className="bg-white p-7 h-full flex items-start gap-4">
+              <div className="bg-white p-5 md:p-7 h-full flex flex-col sm:flex-row items-start gap-3 sm:gap-4">
                 <span className="mt-0.5 grid place-items-center h-11 w-11 shrink-0" style={{ background: "rgba(239,115,32,0.10)" }}>
                   <a.icon className="h-5 w-5" style={{ color: ORANGE }} />
                 </span>
                 <div className="min-w-0">
-                  <h4 className="font-display text-[20px] text-[#0C2A4D]">{a.t}</h4>
-                  <p className="mt-1.5 text-sm leading-relaxed" style={{ color: `${INK}bf` }}>{a.d}</p>
+                  <h4 className="font-display text-[17px] md:text-[20px] text-[#0C2A4D]">{a.t}</h4>
+                  <p className="mt-1.5 text-[13px] md:text-sm leading-relaxed" style={{ color: `${INK}bf` }}>{a.d}</p>
                 </div>
               </div>
             </Reveal>
