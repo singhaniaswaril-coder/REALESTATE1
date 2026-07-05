@@ -108,17 +108,4 @@ export const LEADERS: Leader[] = [
       "Focused on building a trusted, future-ready enterprise through creativity, leadership and customer-centric values.",
     ],
   },
-  {
-    name: "Subhadra Lunawath",
-    role: "Director",
-    // No photo supplied - rendered as a brand monogram.
-    summary:
-      "A design and marketing specialist who blends creative planning with brand development and interior design.",
-    bio: [
-      "Expertise in Design Management with a strong focus on creative planning and execution.",
-      "Experienced in Marketing Strategy, Brand Development & Client Engagement.",
-      "Skilled in Interior Designing with an eye for modern aesthetics and functional spaces.",
-      "Recognized for combining creativity, market insight and innovative design solutions to enhance project value.",
-    ],
-  },
 ];

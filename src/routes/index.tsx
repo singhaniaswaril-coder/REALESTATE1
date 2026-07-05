@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
   Camera, Zap, Droplets, Sun, Sprout, Smartphone, ShieldCheck, Bath, Trees,
-  Car, Compass, Building2, ArrowRight, Download, Instagram, MapPin,
-  ChevronLeft, ChevronRight, Flame,
+  Car, Compass, ArrowRight, Instagram, Facebook, MapPin,
+  ChevronLeft, ChevronRight, Flame, Phone, Mail,
 } from "lucide-react";
 import {
   Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription,
@@ -13,10 +13,10 @@ import {
   ONGOING_PROJECTS, UPCOMING_PROJECTS, type Project,
 } from "@/lib/projects";
 import { LEADERS, type Leader } from "@/lib/leadership";
+import { LaunchingSoonMedia } from "@/lib/coming-soon";
 import heroImg from "@/assets/Cover page new.jpg";
-import aboutImg from "@/assets/scaling-ananta/elevation-02.png";
-import whiteLogo from "@/assets/full_white_logo.png";
-import profilePdf from "@/assets/scaling-ventures-profile.pdf?url";
+import aboutImg from "@/assets/scaling-ananta/elevation-01.png";
+import whiteLogo from "@/assets/logo-full-white.png";
 
 /* Brand palette - Orange = primary/dominant, Blue = secondary, White = base */
 const ORANGE = "#EF7320";
@@ -26,8 +26,28 @@ const INK = "#15233B";
 const WHITE = "#FFFFFF";
 const MIST = "#F1F5FB";
 
-// TODO: replace with the real Scaling Ventures Instagram URL once available.
+// TODO: replace these with the real Scaling Ventures social handles / number.
 const INSTAGRAM_URL = "https://www.instagram.com/";
+const FACEBOOK_URL = "https://www.facebook.com/";
+// wa.me deep-link opens a WhatsApp chat directly. Replace 91XXXXXXXXXX with the
+// company's WhatsApp number (country code + number, no spaces or symbols).
+const WHATSAPP_URL = "https://wa.me/91XXXXXXXXXX";
+
+// TODO: replace with the real phone number and GoDaddy professional email.
+// CONTACT_PHONE is what's shown; CONTACT_PHONE_TEL is the tel: link (digits +
+// country code only, no spaces/symbols).
+const CONTACT_PHONE = "+91 98765 43210";
+const CONTACT_PHONE_TEL = "+919876543210";
+const CONTACT_EMAIL = "info@scalingventures.in";
+
+/* WhatsApp glyph - lucide dropped brand icons, so we inline it. */
+function WhatsAppIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.548 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413" />
+    </svg>
+  );
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -49,12 +69,12 @@ const NAV: NavItem[] = [
   { label: "About", href: "#about" },
   { label: "Mission", href: "#mission" },
   { label: "Projects", href: "#projects" },
-  { label: "Leadership", href: "#leadership" },
+  { label: "Directors", href: "#leadership" },
   { label: "Amenities", href: "#amenities" },
   { label: "Contact", href: "#contact" },
 ];
 
-function Logo({ className = "h-16 md:h-20" }: { className?: string }) {
+function Logo({ className = "h-10 md:h-12" }: { className?: string }) {
   return (
     <a href="#home" className="inline-flex items-center" aria-label="Scaling Ventures Pvt. Ltd. home">
       <img src={whiteLogo} alt="Scaling Ventures Pvt. Ltd." className={`${className} w-auto`} />
@@ -186,9 +206,7 @@ function Hero() {
           <Reveal delay={320}>
             <div className="mt-10 flex flex-wrap gap-3">
               <a href="#projects" className="btn-primary">Explore Projects</a>
-              <a href={profilePdf} target="_blank" rel="noopener noreferrer" className="btn-outline">
-                <Download className="h-4 w-4" /> Company Profile
-              </a>
+              <a href="#contact" className="btn-outline">Enquire Now</a>
             </div>
           </Reveal>
         </div>
@@ -338,6 +356,14 @@ function BrochureDialog({ project }: { project: Project }) {
           <div className="aspect-[3/4] sm:aspect-[4/3] w-full grid place-items-center">
             <img src={images[idx]} alt={`${project.name} - ${idx + 1}`} className="max-h-[78vh] w-full object-contain" />
           </div>
+          {project.vastu && (
+            <span
+              className="absolute top-4 left-4 z-10 inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] tracking-[0.16em] uppercase text-white shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)]"
+              style={{ background: ORANGE }}
+            >
+              <Compass className="h-3.5 w-3.5" /> 100% Vastu
+            </span>
+          )}
           {images.length > 1 && (
             <>
               <button onClick={() => go(-1)} aria-label="Previous"
@@ -410,13 +436,9 @@ function ComingSoonCard({ p, i }: { p: Project; i: number }) {
   return (
     <Reveal delay={i * 70}>
       <article className="group bg-white border border-[#E2E8F0] overflow-hidden flex flex-col h-full">
-        <div className="relative aspect-[16/11] overflow-hidden grid place-items-center"
-          style={{ background: `linear-gradient(135deg, ${BLUE} 0%, ${BLUE_DEEP} 60%, #123a63 100%)` }}>
-          <div className="text-center px-6">
-            <Building2 className="mx-auto h-10 w-10 text-white/40" />
-            <p className="mt-3 text-[10px] tracking-[0.28em] uppercase text-white/55">Render Coming Soon</p>
-          </div>
-          <span className="absolute top-4 left-4 px-3 py-1.5 text-[10px] tracking-[0.18em] uppercase text-white" style={{ background: ORANGE }}>
+        <div className="relative aspect-[16/11] overflow-hidden">
+          <LaunchingSoonMedia />
+          <span className="absolute top-4 left-4 z-10 px-3 py-1.5 text-[10px] tracking-[0.18em] uppercase text-white" style={{ background: ORANGE }}>
             Coming Soon
           </span>
         </div>
@@ -476,9 +498,13 @@ function initials(name: string) {
   return name.split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase();
 }
 
-function LeaderCard({ leader, i }: { leader: Leader; i: number }) {
+function LeaderCard({ leader, i, className = "" }: { leader: Leader; i: number; className?: string }) {
   return (
-    <Reveal delay={i * 50}>
+    // No h-full on this flex item: align-items:stretch already equalises row
+    // height, and an explicit height:100% would suppress that stretch and let
+    // cards fall back to their (unequal) content heights. flex-col lets the
+    // inner <article> fill the stretched item in both axes.
+    <Reveal delay={i * 50} className={`flex flex-col ${className}`}>
       <article className="group bg-white border border-[#E2E8F0] overflow-hidden flex flex-col h-full transition-all duration-500 hover:shadow-[0_24px_60px_-30px_rgba(12,42,77,0.4)] hover:-translate-y-1">
         <div className="relative aspect-[4/5] overflow-hidden bg-[#F1F5FB]">
           {leader.photo ? (
@@ -540,9 +566,9 @@ function Leadership() {
       <div className="container-x">
         <div className="max-w-2xl">
           <Reveal>
-            <span className="eyebrow">Meet Our Partners</span>
+            <span className="eyebrow">Meet the Team</span>
             <h2 className="mt-4 font-display text-4xl md:text-5xl leading-[1.08]">
-              The team behind Scaling Ventures.
+              Board of Directors
             </h2>
             <p className="mt-6 text-[15.5px] leading-[1.8]" style={{ color: `${INK}bf` }}>
               A leadership group spanning real estate, finance, logistics, design and law - bound by a
@@ -550,8 +576,17 @@ function Leadership() {
             </p>
           </Reveal>
         </div>
-        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {LEADERS.map((l, i) => <LeaderCard key={l.name} leader={l} i={i} />)}
+        {/* Centered flex layout keeps the odd count (7) balanced - the final row
+            of directors sits centred rather than stranded to one side. */}
+        <div className="mt-14 flex flex-wrap justify-center gap-6">
+          {LEADERS.map((l, i) => (
+            <LeaderCard
+              key={l.name}
+              leader={l}
+              i={i}
+              className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)]"
+            />
+          ))}
         </div>
       </div>
     </section>
@@ -606,31 +641,15 @@ function Amenities() {
             </Reveal>
           ))}
         </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- CORPORATE PROFILE ---------------- */
-
-function ProfileCTA() {
-  return (
-    <section className="py-20 md:py-24" style={{ background: BLUE, color: WHITE }}>
-      <div className="container-x grid lg:grid-cols-12 gap-10 items-center">
-        <Reveal className="lg:col-span-8">
-          <span className="eyebrow" style={{ color: ORANGE }}>Corporate Profile</span>
-          <h2 className="mt-4 font-display text-3xl md:text-4xl leading-[1.1] text-white max-w-2xl">
-            Explore the full Scaling Ventures story.
-          </h2>
-          <p className="mt-4 text-white/75 max-w-xl text-[15px] leading-relaxed">
-            Download our company profile for an overview of who we are, our leadership, projects and
-            the standards we build to.
+        <Reveal>
+          <p className="mt-8 flex items-start gap-2.5 text-[12.5px] md:text-[13px] leading-relaxed" style={{ color: `${INK}99` }}>
+            <span className="mt-1.5 block h-1.5 w-1.5 shrink-0" style={{ background: ORANGE }} />
+            <span>
+              <strong style={{ color: `${INK}cc` }}>Terms &amp; Conditions Apply:</strong> Amenities may
+              vary from project to project. Please refer to the respective project details for the list
+              of available amenities.
+            </span>
           </p>
-        </Reveal>
-        <Reveal className="lg:col-span-4 lg:text-right" delay={120}>
-          <a href={profilePdf} target="_blank" rel="noopener noreferrer" className="btn-primary">
-            <Download className="h-4 w-4" /> Download Company Profile
-          </a>
         </Reveal>
       </div>
     </section>
@@ -675,6 +694,32 @@ function Enquiry() {
             Share a few details and our team will get back to you with availability, pricing and a
             personal walkthrough of the project you're interested in.
           </p>
+
+          {/* Direct contact - shown up front so visitors can call/email without
+              having to fill in the form first. */}
+          <div className="mt-9 flex flex-col gap-3">
+            <a href={`tel:${CONTACT_PHONE_TEL}`}
+              className="group flex items-center gap-3.5 border border-[#E2E8F0] px-4 py-3.5 hover:border-[#EF7320] transition-colors">
+              <span className="grid place-items-center h-10 w-10 shrink-0" style={{ background: "rgba(239,115,32,0.10)" }}>
+                <Phone className="h-4 w-4" style={{ color: ORANGE }} />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-[10px] tracking-[0.22em] uppercase" style={{ color: `${INK}80` }}>Call us</span>
+                <span className="block font-display text-[18px] leading-tight text-[#0C2A4D] truncate">{CONTACT_PHONE}</span>
+              </span>
+            </a>
+            <a href={`mailto:${CONTACT_EMAIL}`}
+              className="group flex items-center gap-3.5 border border-[#E2E8F0] px-4 py-3.5 hover:border-[#EF7320] transition-colors">
+              <span className="grid place-items-center h-10 w-10 shrink-0" style={{ background: "rgba(239,115,32,0.10)" }}>
+                <Mail className="h-4 w-4" style={{ color: ORANGE }} />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-[10px] tracking-[0.22em] uppercase" style={{ color: `${INK}80` }}>Email us</span>
+                <span className="block font-display text-[18px] leading-tight text-[#0C2A4D] truncate">{CONTACT_EMAIL}</span>
+              </span>
+            </a>
+          </div>
+
           <div className="mt-10 space-y-5">
             {[
               { l: "Direct from the developer", v: "No middlemen - you speak to our team." },
@@ -690,10 +735,20 @@ function Enquiry() {
               </div>
             ))}
           </div>
-          <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer"
-            className="mt-10 inline-flex items-center gap-2.5 text-[12px] tracking-[0.16em] uppercase" style={{ color: BLUE }}>
-            <Instagram className="h-4 w-4" style={{ color: ORANGE }} /> Follow us on Instagram
-          </a>
+          <div className="mt-10 flex flex-col gap-3.5">
+            <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-2.5 text-[12px] tracking-[0.16em] uppercase hover:opacity-70 transition-opacity" style={{ color: BLUE }}>
+              <Instagram className="h-4 w-4" style={{ color: ORANGE }} /> Follow us on Instagram
+            </a>
+            <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-2.5 text-[12px] tracking-[0.16em] uppercase hover:opacity-70 transition-opacity" style={{ color: BLUE }}>
+              <Facebook className="h-4 w-4" style={{ color: ORANGE }} /> Follow us on Facebook
+            </a>
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-2.5 text-[12px] tracking-[0.16em] uppercase hover:opacity-70 transition-opacity" style={{ color: BLUE }}>
+              <WhatsAppIcon className="h-4 w-4 text-[#EF7320]" /> Chat with us on WhatsApp
+            </a>
+          </div>
         </Reveal>
 
         <Reveal className="lg:col-span-7" delay={120}>
@@ -757,16 +812,34 @@ function Footer() {
     <footer className="pt-20 pb-10" style={{ background: BLUE_DEEP, color: WHITE }}>
       <div className="container-x grid md:grid-cols-12 gap-12">
         <div className="md:col-span-5">
-          <Logo className="h-16 md:h-20" />
+          <Logo className="h-12 md:h-14" />
           <p className="mt-6 text-sm leading-relaxed text-white/65 max-w-sm">
             Scaling Ventures Pvt. Ltd. - a professionally managed construction and real-estate
             development firm, established December 2024, building thoughtfully planned residential
             developments across Chennai.
           </p>
-          <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer"
-            className="mt-7 inline-flex items-center justify-center h-9 w-9 border border-white/18 hover:border-[#EF7320] hover:text-[#EF7320] transition-colors">
-            <Instagram className="h-4 w-4" />
-          </a>
+          <div className="mt-7 flex items-center gap-3">
+            <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+              className="inline-flex items-center justify-center h-9 w-9 border border-white/18 hover:border-[#EF7320] hover:text-[#EF7320] transition-colors">
+              <Instagram className="h-4 w-4" />
+            </a>
+            <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+              className="inline-flex items-center justify-center h-9 w-9 border border-white/18 hover:border-[#EF7320] hover:text-[#EF7320] transition-colors">
+              <Facebook className="h-4 w-4" />
+            </a>
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
+              className="inline-flex items-center justify-center h-9 w-9 border border-white/18 hover:border-[#EF7320] hover:text-[#EF7320] transition-colors">
+              <WhatsAppIcon className="h-4 w-4" />
+            </a>
+          </div>
+          <div className="mt-7 space-y-2.5 text-sm">
+            <a href={`tel:${CONTACT_PHONE_TEL}`} className="flex items-center gap-2.5 text-white/70 hover:text-[#EF7320] transition-colors">
+              <Phone className="h-4 w-4 shrink-0" style={{ color: ORANGE }} /> {CONTACT_PHONE}
+            </a>
+            <a href={`mailto:${CONTACT_EMAIL}`} className="flex items-center gap-2.5 text-white/70 hover:text-[#EF7320] transition-colors">
+              <Mail className="h-4 w-4 shrink-0" style={{ color: ORANGE }} /> {CONTACT_EMAIL}
+            </a>
+          </div>
         </div>
         <div className="md:col-span-3">
           <h4 className="text-[10px] tracking-[0.28em] uppercase" style={{ color: ORANGE }}>Explore</h4>
@@ -788,7 +861,7 @@ function Footer() {
       </div>
       <div className="container-x mt-16 pt-7 border-t border-white/10 flex flex-wrap justify-between gap-4 text-xs text-white/50">
         <p>© {year} Scaling Ventures Pvt. Ltd. All rights reserved.</p>
-        <a href={profilePdf} target="_blank" rel="noopener noreferrer" className="hover:text-[#EF7320]">Company Profile</a>
+        <p>Chennai, Tamil Nadu, India</p>
       </div>
     </footer>
   );
@@ -820,7 +893,6 @@ function HomePage() {
       <Projects />
       <Leadership />
       <Amenities />
-      <ProfileCTA />
       <Enquiry />
       <Footer />
       <StickyCTA />

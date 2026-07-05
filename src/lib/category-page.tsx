@@ -1,11 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Building2, MapPin, ArrowRight } from "lucide-react";
+import { MapPin, ArrowRight } from "lucide-react";
 import { Reveal } from "@/lib/reveal";
 import { PROJECTS, type Project, type ProjectCategory } from "@/lib/projects";
+import { LaunchingSoonMedia } from "@/lib/coming-soon";
 
 const ORANGE = "#EF7320";
 const BLUE = "#0C2A4D";
-const BLUE_DEEP = "#081E38";
 const INK = "#15233B";
 
 function ProjectCard({ p, i }: { p: Project; i: number }) {
@@ -14,17 +14,14 @@ function ProjectCard({ p, i }: { p: Project; i: number }) {
     <Reveal delay={i * 60}>
       <article className="group bg-white border border-[#E2E8F0] overflow-hidden flex flex-col h-full transition-all duration-500 hover:shadow-[0_24px_60px_-30px_rgba(12,42,77,0.45)] hover:-translate-y-1">
         <div className="relative aspect-[4/3] overflow-hidden grid place-items-center"
-          style={!p.image ? { background: `linear-gradient(135deg, ${BLUE} 0%, ${BLUE_DEEP} 60%, #123a63 100%)` } : { background: "#F1F5FB" }}>
+          style={p.image ? { background: "#F1F5FB" } : undefined}>
           {p.image ? (
             <img src={p.image} alt={p.name} loading="lazy"
               className="w-full h-full object-contain transition-transform duration-[1200ms] group-hover:scale-105" />
           ) : (
-            <div className="text-center px-6">
-              <Building2 className="mx-auto h-9 w-9 text-white/40" />
-              <p className="mt-3 text-[10px] tracking-[0.28em] uppercase text-white/55">Render Coming Soon</p>
-            </div>
+            <LaunchingSoonMedia />
           )}
-          <span className="absolute top-4 left-4 px-3 py-1.5 text-[10px] tracking-[0.18em] uppercase text-white"
+          <span className="absolute top-4 left-4 z-10 px-3 py-1.5 text-[10px] tracking-[0.18em] uppercase text-white"
             style={{ background: isUpcoming ? ORANGE : "rgba(12,42,77,0.92)" }}>
             {p.status}
           </span>

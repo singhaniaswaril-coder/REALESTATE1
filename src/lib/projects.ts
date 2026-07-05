@@ -4,7 +4,6 @@ import jaiFront from "@/assets/jai-shankeshwar/front-elevation.png";
 import jaiNorth from "@/assets/jai-shankeshwar/north-elevation.png";
 import jaiSouth from "@/assets/jai-shankeshwar/south-elevation.png";
 import anantaElev1 from "@/assets/scaling-ananta/elevation-01.png";
-import anantaElev2 from "@/assets/scaling-ananta/elevation-02.png";
 
 // Brochure page galleries (folder globs - drop more pages in and they appear automatically)
 function gallery(modules: Record<string, unknown>): string[] {
@@ -13,13 +12,15 @@ function gallery(modules: Record<string, unknown>): string[] {
     .map(([, url]) => url as string);
 }
 
+// Jai Shankeshwar: brochure pages 1-3 (cover render, elevation pair, stilt plan)
+// are dropped per the brief - keep only page 4 onward.
 const jaiBrochure = gallery(
   import.meta.glob("../assets/jai-shankeshwar/brochure-*.jpeg", {
     eager: true,
     query: "?url",
     import: "default",
   }),
-);
+).slice(3);
 const anantaBrochure = gallery(
   import.meta.glob("../assets/scaling-ananta/brochure-*.jpeg", {
     eager: true,
@@ -44,6 +45,7 @@ export type Project = {
   highlights?: string[];
   image?: string;
   gallery?: string[];
+  vastu?: boolean;
 };
 
 export const PROJECTS: Project[] = [
@@ -66,6 +68,7 @@ export const PROJECTS: Project[] = [
       "Expected delivery: Diwali 2026",
     ],
     image: jaiFront,
+    vastu: true,
     gallery: [jaiFront, jaiNorth, jaiSouth, ...jaiBrochure],
   },
   {
@@ -86,7 +89,10 @@ export const PROJECTS: Project[] = [
       "Covered car parking",
     ],
     image: anantaElev1,
-    gallery: [anantaElev1, anantaElev2, ...anantaBrochure],
+    vastu: true,
+    // First two brochure images (both elevation renders) dropped per the brief;
+    // elevation-01 is now featured in the About section instead.
+    gallery: [...anantaBrochure],
   },
   // ---------------- COMING SOON ----------------
   {
