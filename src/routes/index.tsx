@@ -26,8 +26,8 @@ const INK = "#15233B";
 const WHITE = "#FFFFFF";
 const MIST = "#F1F5FB";
 
-// TODO: replace these with the real Scaling Ventures social handles / number.
-const INSTAGRAM_URL = "https://www.instagram.com/";
+const INSTAGRAM_URL = "https://www.instagram.com/scalingventures_pvtltd";
+// TODO: replace these with the real Scaling Ventures Facebook page / number.
 const FACEBOOK_URL = "https://www.facebook.com/";
 // wa.me deep-link opens a WhatsApp chat directly. Replace 91XXXXXXXXXX with the
 // company's WhatsApp number (country code + number, no spaces or symbols).
@@ -705,7 +705,7 @@ function Enquiry() {
               </span>
               <span className="min-w-0">
                 <span className="block text-[10px] tracking-[0.22em] uppercase" style={{ color: `${INK}80` }}>Call us</span>
-                <span className="block font-display text-[18px] leading-tight text-[#0C2A4D] truncate">{CONTACT_PHONE}</span>
+                <span className="block text-[15px] font-medium tracking-wide leading-tight text-[#0C2A4D] truncate">{CONTACT_PHONE}</span>
               </span>
             </a>
             <a href={`mailto:${CONTACT_EMAIL}`}
@@ -715,7 +715,7 @@ function Enquiry() {
               </span>
               <span className="min-w-0">
                 <span className="block text-[10px] tracking-[0.22em] uppercase" style={{ color: `${INK}80` }}>Email us</span>
-                <span className="block font-display text-[18px] leading-tight text-[#0C2A4D] truncate">{CONTACT_EMAIL}</span>
+                <span className="block text-[15px] font-medium tracking-wide leading-tight text-[#0C2A4D] truncate">{CONTACT_EMAIL}</span>
               </span>
             </a>
           </div>

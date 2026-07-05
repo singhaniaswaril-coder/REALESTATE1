@@ -38,9 +38,8 @@ function Skyline() {
         <rect x="288" y="66" width="36" height="64" />
         <rect x="350" y="82" width="26" height="48" />
       </g>
-      {/* tallest tower + brand beacon */}
+      {/* tallest tower */}
       <rect x="140" y="30" width="22" height="100" fill="#FFFFFF" fillOpacity="0.12" />
-      <rect x="148" y="22" width="6" height="10" fill={ORANGE} fillOpacity="0.9" />
     </svg>
   );
 }

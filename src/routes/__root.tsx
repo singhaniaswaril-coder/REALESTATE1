@@ -10,7 +10,10 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import logoUrl from "../assets/logo.png";
+import favicon512 from "../assets/brand/favicon-512.png";
+import favicon32 from "../assets/brand/favicon-32.png";
+import appleTouchIcon from "../assets/brand/apple-touch-icon.png";
+import ogImage from "../assets/brand/og-image.png";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -78,15 +81,25 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Scaling Ventures - Premium Real Estate & Integrated Communities" },
-      { name: "description", content: "Scaling Ventures builds landmark residential, commercial, and integrated township developments crafted for modern Indian luxury living." },
-      { property: "og:title", content: "Scaling Ventures - Premium Real Estate" },
-      { property: "og:description", content: "Landmark residential, commercial, and integrated township developments." },
+      { name: "theme-color", content: "#0C2A4D" },
+      { title: "Scaling Ventures Pvt. Ltd. - Construction & Real Estate, Chennai" },
+      { name: "description", content: "Scaling Ventures is a professionally managed construction and real-estate development firm in Chennai, delivering innovative, sustainable and high-quality residential developments." },
+      { property: "og:site_name", content: "Scaling Ventures Pvt. Ltd." },
+      { property: "og:title", content: "Scaling Ventures Pvt. Ltd. - Construction & Real Estate, Chennai" },
+      { property: "og:description", content: "A professionally managed construction and real-estate development firm building thoughtfully planned residential developments across Chennai." },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: ogImage },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Scaling Ventures Pvt. Ltd. - Construction & Real Estate, Chennai" },
+      { name: "twitter:description", content: "Thoughtfully planned residential developments built on excellence, transparency and timely execution." },
+      { name: "twitter:image", content: ogImage },
     ],
     links: [
-      { rel: "icon", type: "image/png", href: logoUrl },
+      { rel: "icon", type: "image/png", sizes: "32x32", href: favicon32 },
+      { rel: "icon", type: "image/png", sizes: "512x512", href: favicon512 },
+      { rel: "apple-touch-icon", sizes: "180x180", href: appleTouchIcon },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" },
