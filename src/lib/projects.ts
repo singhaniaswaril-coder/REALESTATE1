@@ -4,6 +4,9 @@ import jaiFront from "@/assets/jai-shankeshwar/front-elevation.png";
 import jaiNorth from "@/assets/jai-shankeshwar/north-elevation.png";
 import jaiSouth from "@/assets/jai-shankeshwar/south-elevation.png";
 import anantaElev1 from "@/assets/scaling-ananta/elevation-01.png";
+// Latest on-site construction progress photos (shown in the Project Status dialog).
+import jaiProgress from "@/assets/project-completion/Jai Shankeshwar Apartment.jpeg";
+import anantaProgress from "@/assets/project-completion/Ananta.jpeg";
 
 // Brochure page galleries (folder globs - drop more pages in and they appear automatically)
 function gallery(modules: Record<string, unknown>): string[] {
@@ -66,7 +69,8 @@ export const PROJECTS: Project[] = [
     config: "3 & 4 BHK Luxury Apartments",
     tagline: "A lifestyle of unparalleled comfort and convenience.",
     unitsLeft: 2,
-    progressPct: 65,
+    progressPct: 64,
+    progressImage: jaiProgress,
     summary:
       "Our flagship residence on Vellala Street - a boutique tower of expansive 3 & 4 BHK homes wrapped in refined stone-and-timber elevations, framed balconies and covered parking. Expected completion by Diwali 2026.",
     highlights: [
@@ -90,7 +94,8 @@ export const PROJECTS: Project[] = [
     config: "2 BHK Flats",
     tagline: "Own the dream. Live the lifestyle.",
     unitsLeft: 8,
-    progressPct: 40,
+    progressPct: 5,
+    progressImage: anantaProgress,
     summary:
       "An intimate collection of just eight thoughtfully planned 2 BHK homes on Chellappa Street, with a lift, round-the-clock security and covered car parking.",
     highlights: [
