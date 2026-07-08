@@ -42,6 +42,8 @@ export type Project = {
   config?: string;
   tagline?: string;
   summary: string;
+  /** Remaining unsold units - shown as an urgency badge on ongoing cards. */
+  unitsLeft?: number;
   highlights?: string[];
   image?: string;
   gallery?: string[];
@@ -59,6 +61,7 @@ export const PROJECTS: Project[] = [
     status: "Ongoing",
     config: "3 & 4 BHK Luxury Apartments",
     tagline: "A lifestyle of unparalleled comfort and convenience.",
+    unitsLeft: 2,
     summary:
       "Our flagship residence on Vellala Street - a boutique tower of expansive 3 & 4 BHK homes wrapped in refined stone-and-timber elevations, framed balconies and covered parking. Expected completion by Diwali 2026.",
     highlights: [
@@ -80,6 +83,7 @@ export const PROJECTS: Project[] = [
     status: "Ongoing",
     config: "2 BHK Flats - only 8 units",
     tagline: "Own the dream. Live the lifestyle.",
+    unitsLeft: 1,
     summary:
       "An intimate collection of just eight thoughtfully planned 2 BHK homes on Chellappa Street - 100% Vastu-compliant, with a lift, round-the-clock security and covered car parking.",
     highlights: [

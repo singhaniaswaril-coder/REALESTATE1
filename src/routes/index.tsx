@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {
   Camera, Zap, Droplets, Sun, Sprout, Smartphone, ShieldCheck, Bath, Trees,
   Car, Compass, ArrowRight, Instagram, Facebook, MapPin,
-  ChevronLeft, ChevronRight, Flame, Phone, Mail,
+  Flame, Phone, Mail, Star, Quote,
 } from "lucide-react";
 import {
   Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription,
@@ -27,18 +27,26 @@ const WHITE = "#FFFFFF";
 const MIST = "#F1F5FB";
 
 const INSTAGRAM_URL = "https://www.instagram.com/scalingventures_pvtltd";
-// TODO: replace these with the real Scaling Ventures Facebook page / number.
+// TODO: replace with the real Scaling Ventures Facebook page.
 const FACEBOOK_URL = "https://www.facebook.com/";
-// wa.me deep-link opens a WhatsApp chat directly. Replace 91XXXXXXXXXX with the
-// company's WhatsApp number (country code + number, no spaces or symbols).
-const WHATSAPP_URL = "https://wa.me/91XXXXXXXXXX";
 
-// TODO: replace with the real phone number and GoDaddy professional email.
+// Single source of truth for the WhatsApp / phone number (also the call number).
+// WHATSAPP_NUMBER is digits only (country code + number) for wa.me deep-links.
+const WHATSAPP_NUMBER = "919384793804";
+// wa.me deep-link opens a WhatsApp chat directly; ?text= pre-fills a message.
+function whatsappLink(message: string) {
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+const WHATSAPP_URL = whatsappLink(
+  "Hi Scaling Ventures, I'd like to know more about your projects.",
+);
+
 // CONTACT_PHONE is what's shown; CONTACT_PHONE_TEL is the tel: link (digits +
-// country code only, no spaces/symbols).
-const CONTACT_PHONE = "+91 98765 43210";
-const CONTACT_PHONE_TEL = "+919876543210";
-const CONTACT_EMAIL = "info@scalingventures.in";
+// country code only, no spaces/symbols). Same number as WhatsApp.
+// TODO: replace with the real GoDaddy professional email.
+const CONTACT_PHONE = "+91 93847 93804";
+const CONTACT_PHONE_TEL = "+919384793804";
+const CONTACT_EMAIL = "info@scalingventurespvtltd.com";
 
 /* WhatsApp glyph - lucide dropped brand icons, so we inline it. */
 function WhatsAppIcon({ className = "h-4 w-4" }: { className?: string }) {
@@ -71,10 +79,11 @@ const NAV: NavItem[] = [
   { label: "Projects", href: "#projects" },
   { label: "Directors", href: "#leadership" },
   { label: "Amenities", href: "#amenities" },
+  // { label: "Reviews", href: "#testimonials" },
   { label: "Contact", href: "#contact" },
 ];
 
-function Logo({ className = "h-10 md:h-12" }: { className?: string }) {
+function Logo({ className = "h-12 md:h-14" }: { className?: string }) {
   return (
     <a href="#home" className="inline-flex items-center" aria-label="Scaling Ventures Pvt. Ltd. home">
       <img src={whiteLogo} alt="Scaling Ventures Pvt. Ltd." className={`${className} w-auto`} />
@@ -339,50 +348,21 @@ function MissionVision() {
 
 /* ---------------- PROJECTS ---------------- */
 
-function BrochureDialog({ project }: { project: Project }) {
-  const images = project.gallery ?? [];
-  const [idx, setIdx] = useState(0);
-  if (images.length === 0) return null;
-  const go = (d: number) => setIdx((v) => (v + d + images.length) % images.length);
+/* "Request Brochure" opens a WhatsApp chat with a pre-filled request for the
+   specific project, so enquiries land straight in the sales inbox. */
+function RequestBrochure({ project }: { project: Project }) {
+  const href = whatsappLink(
+    `Hi, I'd like to request the brochure for ${project.name}. Please share the details.`,
+  );
   return (
-    <Dialog onOpenChange={() => setIdx(0)}>
-      <DialogTrigger asChild>
-        <button className="btn-primary !py-3 !px-5 !text-[11px]">View Brochure</button>
-      </DialogTrigger>
-      <DialogContent className="max-w-3xl !p-0 overflow-hidden border-0 bg-[#0C2A4D]">
-        <DialogTitle className="sr-only">{project.name} brochure</DialogTitle>
-        <DialogDescription className="sr-only">Project renders and brochure pages for {project.name}.</DialogDescription>
-        <div className="relative bg-[#0C2A4D]">
-          <div className="aspect-[3/4] sm:aspect-[4/3] w-full grid place-items-center">
-            <img src={images[idx]} alt={`${project.name} - ${idx + 1}`} className="max-h-[78vh] w-full object-contain" />
-          </div>
-          {project.vastu && (
-            <span
-              className="absolute top-4 left-4 z-10 inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] tracking-[0.16em] uppercase text-white shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)]"
-              style={{ background: ORANGE }}
-            >
-              <Compass className="h-3.5 w-3.5" /> 100% Vastu
-            </span>
-          )}
-          {images.length > 1 && (
-            <>
-              <button onClick={() => go(-1)} aria-label="Previous"
-                className="absolute left-3 top-1/2 -translate-y-1/2 grid place-items-center h-10 w-10 rounded-full bg-black/45 text-white hover:bg-[#EF7320] transition-colors">
-                <ChevronLeft className="h-5 w-5" />
-              </button>
-              <button onClick={() => go(1)} aria-label="Next"
-                className="absolute right-3 top-1/2 -translate-y-1/2 grid place-items-center h-10 w-10 rounded-full bg-black/45 text-white hover:bg-[#EF7320] transition-colors">
-                <ChevronRight className="h-5 w-5" />
-              </button>
-            </>
-          )}
-        </div>
-        <div className="flex items-center justify-between px-5 py-3.5 bg-[#081E38]">
-          <span className="text-white font-display text-lg">{project.name}</span>
-          <span className="text-[11px] tracking-[0.18em] uppercase text-white/60">{idx + 1} / {images.length}</span>
-        </div>
-      </DialogContent>
-    </Dialog>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="btn-primary !py-3 !px-5 !text-[11px] inline-flex items-center gap-2"
+    >
+      <WhatsAppIcon className="h-4 w-4" /> Request Brochure
+    </a>
   );
 }
 
@@ -408,6 +388,18 @@ function OngoingCard({ p, i }: { p: Project; i: number }) {
           </div>
           <h3 className="mt-3 font-display text-2xl md:text-3xl leading-tight">{p.name}</h3>
           {p.config && <p className="mt-1.5 text-[12.5px] tracking-[0.12em] uppercase" style={{ color: ORANGE }}>{p.config}</p>}
+          {p.unitsLeft != null && (
+            <span
+              className="mt-3 inline-flex items-center gap-2 self-start px-3 py-1.5 text-[11px] font-medium tracking-[0.14em] uppercase text-white"
+              style={{ background: ORANGE }}
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white/80" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
+              </span>
+              Only {p.unitsLeft} left
+            </span>
+          )}
           {p.tagline && <p className="mt-4 font-display italic text-xl text-[#0C2A4D]">{p.tagline}</p>}
           <p className="mt-3 text-[14.5px] leading-relaxed flex-1" style={{ color: `${INK}bf` }}>{p.summary}</p>
 
@@ -423,7 +415,7 @@ function OngoingCard({ p, i }: { p: Project; i: number }) {
           )}
 
           <div className="mt-7 flex flex-wrap gap-2.5">
-            <BrochureDialog project={p} />
+            <RequestBrochure project={p} />
             <a href="#contact" className="btn-secondary !py-3 !px-5 !text-[11px]">Enquire</a>
           </div>
         </div>
@@ -656,6 +648,81 @@ function Amenities() {
   );
 }
 
+/* ---------------- TESTIMONIALS ---------------- */
+
+// Dummy testimonials - placeholders until real customer reviews are collected.
+const TESTIMONIALS = [
+  {
+    quote:
+      "From the first site visit to handover, the Scaling Ventures team was transparent about every detail. The build quality and finishes genuinely exceeded what we were promised.",
+    name: "Ramesh & Lakshmi Iyer",
+    role: "Home owners · Jai Shankeshwar",
+    rating: 5,
+  },
+  {
+    quote:
+      "We loved that we were dealing directly with the developer - no middlemen, clear pricing and honest timelines. Our 2 BHK at Scaling Ananta feels thoughtfully designed for family life.",
+    name: "Karthik Subramaniam",
+    role: "Home owner · Scaling Ananta",
+    rating: 5,
+  },
+  {
+    quote:
+      "The attention to Vastu, the amenities and the quality of construction stood out. Communication was prompt throughout, and they delivered exactly what they committed to.",
+    name: "Anjali Menon",
+    role: "Investor · Chennai",
+    rating: 5,
+  },
+];
+
+function Testimonials() {
+  return (
+    <section id="testimonials" className="py-24 md:py-32" style={{ background: BLUE, color: WHITE }}>
+      <div className="container-x">
+        <div className="max-w-2xl">
+          <Reveal>
+            <span className="eyebrow" style={{ color: ORANGE }}>What Our Residents Say</span>
+            <h2 className="mt-4 font-display text-4xl md:text-5xl leading-[1.08] text-white">
+              Trusted by families across Chennai.
+            </h2>
+            <p className="mt-6 text-[15.5px] leading-[1.8] text-white/70">
+              A few words from the people who now call a Scaling Ventures address home.
+            </p>
+          </Reveal>
+        </div>
+
+        <div className="mt-14 grid md:grid-cols-3 gap-7">
+          {TESTIMONIALS.map((t, i) => (
+            <Reveal key={t.name} delay={i * 120}>
+              <figure className="relative h-full flex flex-col p-8 md:p-9 border border-white/12" style={{ background: "rgba(255,255,255,0.03)" }}>
+                <Quote className="h-8 w-8 shrink-0" style={{ color: ORANGE }} aria-hidden="true" />
+                <div className="mt-5 flex items-center gap-1" aria-label={`${t.rating} out of 5 stars`}>
+                  {Array.from({ length: t.rating }).map((_, k) => (
+                    <Star key={k} className="h-4 w-4" style={{ color: ORANGE, fill: ORANGE }} />
+                  ))}
+                </div>
+                <blockquote className="mt-5 text-[15px] leading-[1.8] text-white/85 flex-1">
+                  "{t.quote}"
+                </blockquote>
+                <figcaption className="mt-7 flex items-center gap-4 pt-6 border-t border-white/12">
+                  <span className="grid place-items-center h-11 w-11 shrink-0 rounded-full font-display text-lg text-white"
+                    style={{ background: ORANGE }}>
+                    {initials(t.name)}
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block font-display text-lg text-white leading-tight">{t.name}</span>
+                    <span className="block text-[11px] tracking-[0.16em] uppercase mt-1" style={{ color: `${WHITE}80` }}>{t.role}</span>
+                  </span>
+                </figcaption>
+              </figure>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ---------------- ENQUIRY (form only) ---------------- */
 
 function Enquiry() {
@@ -735,18 +802,27 @@ function Enquiry() {
               </div>
             ))}
           </div>
-          <div className="mt-10 flex flex-col gap-3.5">
+          <div className="mt-10 flex flex-col gap-4">
             <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 text-[12px] tracking-[0.16em] uppercase hover:opacity-70 transition-opacity" style={{ color: BLUE }}>
-              <Instagram className="h-4 w-4" style={{ color: ORANGE }} /> Follow us on Instagram
+              className="group inline-flex items-center gap-3.5 text-[12px] tracking-[0.16em] uppercase hover:opacity-70 transition-opacity" style={{ color: BLUE }}>
+              <span className="grid place-items-center h-16 w-16 shrink-0" style={{ background: "rgba(239,115,32,0.10)" }}>
+                <Instagram className="h-9 w-9" style={{ color: ORANGE }} />
+              </span>
+              Follow us on Instagram
             </a>
             <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 text-[12px] tracking-[0.16em] uppercase hover:opacity-70 transition-opacity" style={{ color: BLUE }}>
-              <Facebook className="h-4 w-4" style={{ color: ORANGE }} /> Follow us on Facebook
+              className="group inline-flex items-center gap-3.5 text-[12px] tracking-[0.16em] uppercase hover:opacity-70 transition-opacity" style={{ color: BLUE }}>
+              <span className="grid place-items-center h-16 w-16 shrink-0" style={{ background: "rgba(239,115,32,0.10)" }}>
+                <Facebook className="h-9 w-9" style={{ color: ORANGE }} />
+              </span>
+              Follow us on Facebook
             </a>
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 text-[12px] tracking-[0.16em] uppercase hover:opacity-70 transition-opacity" style={{ color: BLUE }}>
-              <WhatsAppIcon className="h-4 w-4 text-[#EF7320]" /> Chat with us on WhatsApp
+              className="group inline-flex items-center gap-3.5 text-[12px] tracking-[0.16em] uppercase hover:opacity-70 transition-opacity" style={{ color: BLUE }}>
+              <span className="grid place-items-center h-16 w-16 shrink-0" style={{ background: "rgba(239,115,32,0.10)" }}>
+                <WhatsAppIcon className="h-9 w-9 text-[#EF7320]" />
+              </span>
+              Chat with us on WhatsApp
             </a>
           </div>
         </Reveal>
@@ -812,7 +888,7 @@ function Footer() {
     <footer className="pt-20 pb-10" style={{ background: BLUE_DEEP, color: WHITE }}>
       <div className="container-x grid md:grid-cols-12 gap-12">
         <div className="md:col-span-5">
-          <Logo className="h-12 md:h-14" />
+          <Logo className="h-16 md:h-16" />
           <p className="mt-6 text-sm leading-relaxed text-white/65 max-w-sm">
             Scaling Ventures Pvt. Ltd. - a professionally managed construction and real-estate
             development firm, established December 2024, building thoughtfully planned residential
@@ -820,16 +896,16 @@ function Footer() {
           </p>
           <div className="mt-7 flex items-center gap-3">
             <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label="Instagram"
-              className="inline-flex items-center justify-center h-9 w-9 border border-white/18 hover:border-[#EF7320] hover:text-[#EF7320] transition-colors">
-              <Instagram className="h-4 w-4" />
+              className="inline-flex items-center justify-center h-14 w-14 border border-white/18 hover:border-[#EF7320] hover:text-[#EF7320] transition-colors">
+              <Instagram className="h-8 w-8" />
             </a>
             <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" aria-label="Facebook"
-              className="inline-flex items-center justify-center h-9 w-9 border border-white/18 hover:border-[#EF7320] hover:text-[#EF7320] transition-colors">
-              <Facebook className="h-4 w-4" />
+              className="inline-flex items-center justify-center h-14 w-14 border border-white/18 hover:border-[#EF7320] hover:text-[#EF7320] transition-colors">
+              <Facebook className="h-8 w-8" />
             </a>
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
-              className="inline-flex items-center justify-center h-9 w-9 border border-white/18 hover:border-[#EF7320] hover:text-[#EF7320] transition-colors">
-              <WhatsAppIcon className="h-4 w-4" />
+              className="inline-flex items-center justify-center h-14 w-14 border border-white/18 hover:border-[#EF7320] hover:text-[#EF7320] transition-colors">
+              <WhatsAppIcon className="h-8 w-8" />
             </a>
           </div>
           <div className="mt-7 space-y-2.5 text-sm">
@@ -893,6 +969,7 @@ function HomePage() {
       <Projects />
       <Leadership />
       <Amenities />
+      {/* <Testimonials /> */}
       <Enquiry />
       <Footer />
       <StickyCTA />
