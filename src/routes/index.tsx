@@ -48,6 +48,12 @@ const CONTACT_PHONE = "+91 93847 93804";
 const CONTACT_PHONE_TEL = "+919384793804";
 const CONTACT_EMAIL = "info@scalingventurespvtltd.com";
 
+// Enquiry form delivery. Web3Forms emails each submission to the inbox the key
+// was created with (help@scalingventurespvtltd.com). Create a free key at
+// https://web3forms.com using that address, then paste it below. Web3Forms
+// access keys are designed to be public, so it's safe to keep here.
+const WEB3FORMS_ACCESS_KEY = "e5c65b4d-445b-4dd4-9e12-33b37a048222";
+
 /* WhatsApp glyph - lucide dropped brand icons, so we inline it. */
 function WhatsAppIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
@@ -772,10 +778,14 @@ function Testimonials() {
 
 /* ---------------- ENQUIRY (form only) ---------------- */
 
+const EMPTY_FORM = { name: "", phone: "", email: "", interest: "General Enquiry", message: "" };
+
 function Enquiry() {
-  const [form, setForm] = useState({ name: "", phone: "", email: "", interest: "General Enquiry", message: "" });
+  const [form, setForm] = useState(EMPTY_FORM);
+  // Honeypot - real users never fill this hidden field; bots do.
+  const [honeypot, setHoneypot] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
   const validate = () => {
     const e: Record<string, string> = {};
@@ -786,10 +796,38 @@ function Enquiry() {
     return Object.keys(e).length === 0;
   };
 
-  const submit = (ev: React.FormEvent) => {
+  const submit = async (ev: React.FormEvent) => {
     ev.preventDefault();
     if (!validate()) return;
-    setSubmitted(true);
+    // Silently succeed for bots so they get no signal to retry.
+    if (honeypot) { setStatus("success"); return; }
+    setStatus("sending");
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `New website enquiry - ${form.interest}`,
+          from_name: "Scaling Ventures Website",
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          interested_in: form.interest,
+          message: form.message,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus("success");
+        setForm(EMPTY_FORM);
+        setErrors({});
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   };
 
   const field = "w-full bg-transparent border-b border-[#E2E8F0] py-3.5 text-[15px] text-[#15233B] placeholder:text-[#15233B]/40 focus:outline-none focus:border-[#EF7320] transition-colors";
@@ -857,6 +895,7 @@ function Enquiry() {
               </span>
               Follow us on Instagram
             </a>
+            {/* Facebook temporarily excluded
             <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer"
               className="group inline-flex items-center gap-3.5 text-[12px] tracking-[0.16em] uppercase hover:opacity-70 transition-opacity" style={{ color: BLUE }}>
               <span className="grid place-items-center h-16 w-16 shrink-0" style={{ background: "rgba(239,115,32,0.10)" }}>
@@ -864,6 +903,7 @@ function Enquiry() {
               </span>
               Follow us on Facebook
             </a>
+            */}
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
               className="group inline-flex items-center gap-3.5 text-[12px] tracking-[0.16em] uppercase hover:opacity-70 transition-opacity" style={{ color: BLUE }}>
               <span className="grid place-items-center h-16 w-16 shrink-0" style={{ background: "rgba(239,115,32,0.10)" }}>
@@ -876,16 +916,30 @@ function Enquiry() {
 
         <Reveal className="lg:col-span-7" delay={120}>
           <div className="bg-white border border-[#E2E8F0] p-7 md:p-12">
-            {submitted ? (
+            {status === "success" ? (
               <div className="py-16 text-center">
                 <div className="mx-auto grid place-items-center h-14 w-14 rounded-full" style={{ background: ORANGE }}>
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2"><path d="M5 12l4 4 10-10" /></svg>
                 </div>
                 <h3 className="mt-6 font-display text-3xl text-[#0C2A4D]">Thank you.</h3>
                 <p className="mt-3 max-w-sm mx-auto" style={{ color: `${INK}bf` }}>Our team will reach out to you shortly.</p>
+                <button onClick={() => setStatus("idle")} className="mt-8 btn-secondary !py-3 !px-6 !text-[11px]">
+                  Submit another enquiry
+                </button>
               </div>
             ) : (
               <form onSubmit={submit} noValidate className="grid grid-cols-1 md:grid-cols-2 gap-7">
+                {/* Honeypot - hidden from users; a filled value flags a bot. */}
+                <input
+                  type="text"
+                  name="botcheck"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="hidden"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                />
                 <div>
                   <label className={label}>Full Name</label>
                   <input className={field} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Your name" />
@@ -921,9 +975,17 @@ function Enquiry() {
                   <label className={label}>Message</label>
                   <textarea rows={3} className={field + " resize-none"} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder="Tell us briefly what you're looking for" />
                 </div>
+                {status === "error" && (
+                  <p className="md:col-span-2 text-sm text-red-600">
+                    Something went wrong. Please try again, or email us directly at{" "}
+                    <a href={`mailto:${CONTACT_EMAIL}`} className="underline">{CONTACT_EMAIL}</a>.
+                  </p>
+                )}
                 <div className="md:col-span-2 flex flex-wrap items-center justify-between gap-4 pt-2">
                   <p className="text-xs max-w-sm" style={{ color: `${INK}8c` }}>By submitting, you agree to be contacted by a Scaling Ventures representative.</p>
-                  <button type="submit" className="btn-primary">Submit Enquiry</button>
+                  <button type="submit" disabled={status === "sending"} className="btn-primary disabled:opacity-60 disabled:pointer-events-none">
+                    {status === "sending" ? "Sending…" : "Submit Enquiry"}
+                  </button>
                 </div>
               </form>
             )}
@@ -953,10 +1015,12 @@ function Footer() {
               className="inline-flex items-center justify-center h-14 w-14 border border-white/18 hover:border-[#EF7320] hover:text-[#EF7320] transition-colors">
               <Instagram className="h-8 w-8" />
             </a>
+            {/* Facebook temporarily excluded
             <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" aria-label="Facebook"
               className="inline-flex items-center justify-center h-14 w-14 border border-white/18 hover:border-[#EF7320] hover:text-[#EF7320] transition-colors">
               <Facebook className="h-8 w-8" />
             </a>
+            */}
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
               className="inline-flex items-center justify-center h-14 w-14 border border-white/18 hover:border-[#EF7320] hover:text-[#EF7320] transition-colors">
               <WhatsAppIcon className="h-8 w-8" />
@@ -1000,10 +1064,37 @@ function Footer() {
 /* ---------------- MOBILE STICKY CTA ---------------- */
 
 function StickyCTA() {
+  // Hide the sticky button whenever a section that already has its own enquiry
+  // CTA is in view - the hero (top) and the contact section (bottom) - so they
+  // don't compete on mobile. Start hidden since the page loads on the hero.
+  const [ctaInView, setCtaInView] = useState(true);
+  useEffect(() => {
+    const els = ["home", "contact"]
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el != null);
+    if (!els.length) return;
+    const visible = new Set<Element>();
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) visible.add(e.target);
+          else visible.delete(e.target);
+        }
+        setCtaInView(visible.size > 0);
+      },
+      { threshold: 0 },
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
   return (
     <a
       href="#contact"
-      className="md:hidden fixed left-4 right-4 bottom-4 z-40 flex items-center justify-center gap-2 py-4 text-[11px] tracking-[0.2em] uppercase shadow-[0_18px_40px_-12px_rgba(239,115,32,0.5)]"
+      aria-hidden={ctaInView}
+      className={`md:hidden fixed left-4 right-4 bottom-4 z-40 flex items-center justify-center gap-2 py-4 text-[11px] tracking-[0.2em] uppercase shadow-[0_18px_40px_-12px_rgba(239,115,32,0.5)] transition-all duration-300 ${
+        ctaInView ? "opacity-0 translate-y-4 pointer-events-none" : "opacity-100"
+      }`}
       style={{ background: ORANGE, color: WHITE }}
     >
       Enquire Now <ArrowRight className="h-4 w-4" />
