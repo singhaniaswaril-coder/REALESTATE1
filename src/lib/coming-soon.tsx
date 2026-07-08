@@ -44,7 +44,13 @@ function Skyline() {
   );
 }
 
-export function LaunchingSoonMedia({ label = "Launching Soon" }: { label?: string }) {
+export function LaunchingSoonMedia({
+  label = "Launching Soon",
+  subtitle = "Scaling Ventures",
+}: {
+  label?: string;
+  subtitle?: string;
+}) {
   return (
     <div
       className="absolute inset-0 overflow-hidden"
@@ -60,7 +66,7 @@ export function LaunchingSoonMedia({ label = "Launching Soon" }: { label?: strin
         <span className="block w-10 h-px" style={{ background: ORANGE }} />
         <p className="mt-4 font-display text-2xl md:text-[26px] text-white/95">{label}</p>
         <p className="mt-2 text-[10px] tracking-[0.32em] uppercase text-white/50">
-          Scaling Ventures
+          {subtitle}
         </p>
       </div>
     </div>

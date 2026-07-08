@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {
   Camera, Zap, Droplets, Sun, Sprout, Smartphone, ShieldCheck, Bath, Trees,
   Car, Compass, ArrowRight, Instagram, Facebook, MapPin,
-  Flame, Phone, Mail, Star, Quote,
+  Flame, Phone, Mail, Star, Quote, Activity,
 } from "lucide-react";
 import {
   Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription,
@@ -83,7 +83,7 @@ const NAV: NavItem[] = [
   { label: "Contact", href: "#contact" },
 ];
 
-function Logo({ className = "h-12 md:h-14" }: { className?: string }) {
+function Logo({ className = "h-14 md:h-14" }: { className?: string }) {
   return (
     <a href="#home" className="inline-flex items-center" aria-label="Scaling Ventures Pvt. Ltd. home">
       <img src={whiteLogo} alt="Scaling Ventures Pvt. Ltd." className={`${className} w-auto`} />
@@ -366,6 +366,52 @@ function RequestBrochure({ project }: { project: Project }) {
   );
 }
 
+/* "Project Status" opens a dialog with the latest site photo and a bar showing
+   how much of the construction is complete. */
+function ProjectStatusDialog({ project }: { project: Project }) {
+  if (project.progressPct == null) return null;
+  const pct = Math.max(0, Math.min(100, project.progressPct));
+  const photo = project.progressImage ?? project.image;
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <button className="btn-ghost-dark !py-3 !px-5 !text-[11px]">
+          <Activity className="h-4 w-4" /> Project Status
+        </button>
+      </DialogTrigger>
+      <DialogContent className="max-w-2xl !p-0 overflow-hidden border-0 bg-[#0C2A4D] [&>button]:z-20 [&>button]:grid [&>button]:h-9 [&>button]:w-9 [&>button]:place-items-center [&>button]:rounded-full [&>button]:bg-black/50 [&>button]:text-white [&>button]:opacity-100 hover:[&>button]:bg-[#EF7320]">
+        <DialogTitle className="sr-only">{project.name} construction status</DialogTitle>
+        <DialogDescription className="sr-only">Latest construction progress for {project.name}.</DialogDescription>
+        <div className="relative bg-[#0C2A4D]">
+          <div className="aspect-[4/3] w-full grid place-items-center">
+            {photo && (
+              <img src={photo} alt={`${project.name} construction progress`} className="max-h-[70vh] w-full object-contain" />
+            )}
+          </div>
+          <span
+            className="absolute top-4 left-4 z-10 inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] tracking-[0.16em] uppercase text-white shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)]"
+            style={{ background: ORANGE }}
+          >
+            <Activity className="h-3.5 w-3.5" /> {pct}% Complete
+          </span>
+        </div>
+        <div className="px-5 py-4 bg-[#081E38]">
+          <div className="flex items-center justify-between text-white">
+            <span className="font-display text-lg">{project.name}</span>
+            <span className="font-display text-2xl" style={{ color: ORANGE }}>{pct}%</span>
+          </div>
+          <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-white/12">
+            <div className="h-full rounded-full" style={{ width: `${pct}%`, background: ORANGE }} />
+          </div>
+          <p className="mt-3 text-[11px] tracking-[0.16em] uppercase text-white/50">
+            Construction progress
+          </p>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 function OngoingCard({ p, i }: { p: Project; i: number }) {
   return (
     <Reveal delay={i * 80}>
@@ -397,7 +443,7 @@ function OngoingCard({ p, i }: { p: Project; i: number }) {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white/80" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
               </span>
-              Only {p.unitsLeft} left
+              Only {p.unitsLeft} {p.unitsLeft === 1 ? "unit" : "units"} left
             </span>
           )}
           {p.tagline && <p className="mt-4 font-display italic text-xl text-[#0C2A4D]">{p.tagline}</p>}
@@ -416,6 +462,7 @@ function OngoingCard({ p, i }: { p: Project; i: number }) {
 
           <div className="mt-7 flex flex-wrap gap-2.5">
             <RequestBrochure project={p} />
+            <ProjectStatusDialog project={p} />
             <a href="#contact" className="btn-secondary !py-3 !px-5 !text-[11px]">Enquire</a>
           </div>
         </div>
@@ -429,7 +476,7 @@ function ComingSoonCard({ p, i }: { p: Project; i: number }) {
     <Reveal delay={i * 70}>
       <article className="group bg-white border border-[#E2E8F0] overflow-hidden flex flex-col h-full">
         <div className="relative aspect-[16/11] overflow-hidden">
-          <LaunchingSoonMedia />
+          <LaunchingSoonMedia subtitle={p.name} />
           <span className="absolute top-4 left-4 z-10 px-3 py-1.5 text-[10px] tracking-[0.18em] uppercase text-white" style={{ background: ORANGE }}>
             Coming Soon
           </span>
@@ -858,9 +905,16 @@ function Enquiry() {
                   <label className={label}>Interested In</label>
                   <select className={field} value={form.interest} onChange={(e) => setForm({ ...form, interest: e.target.value })}>
                     <option>General Enquiry</option>
-                    <option>Jai Shankeshwar Apartment</option>
-                    <option>Scaling Ananta</option>
-                    <option>Upcoming Projects</option>
+                    <optgroup label="Ongoing Projects">
+                      {ONGOING_PROJECTS.map((p) => (
+                        <option key={p.slug}>{p.name}</option>
+                      ))}
+                    </optgroup>
+                    <optgroup label="Coming Soon">
+                      {UPCOMING_PROJECTS.map((p) => (
+                        <option key={p.slug}>{p.name}</option>
+                      ))}
+                    </optgroup>
                   </select>
                 </div>
                 <div className="md:col-span-2">

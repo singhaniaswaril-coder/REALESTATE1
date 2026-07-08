@@ -19,7 +19,7 @@ function ProjectCard({ p, i }: { p: Project; i: number }) {
             <img src={p.image} alt={p.name} loading="lazy"
               className="w-full h-full object-contain transition-transform duration-[1200ms] group-hover:scale-105" />
           ) : (
-            <LaunchingSoonMedia />
+            <LaunchingSoonMedia subtitle={p.name} />
           )}
           <span className="absolute top-4 left-4 z-10 px-3 py-1.5 text-[10px] tracking-[0.18em] uppercase text-white"
             style={{ background: isUpcoming ? ORANGE : "rgba(12,42,77,0.92)" }}>
