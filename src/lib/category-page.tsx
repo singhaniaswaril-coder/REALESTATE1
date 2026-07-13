@@ -3,6 +3,8 @@ import { MapPin, ArrowRight } from "lucide-react";
 import { Reveal } from "@/lib/reveal";
 import { PROJECTS, type Project, type ProjectCategory } from "@/lib/projects";
 import { LaunchingSoonMedia } from "@/lib/coming-soon";
+import heroDesktop from "@/assets/covers/desktop.webp";
+import heroMobile from "@/assets/covers/mobile.webp";
 
 const ORANGE = "#EF7320";
 const BLUE = "#0C2A4D";
@@ -60,8 +62,16 @@ export function CategoryPage({
   return (
     <main className="bg-white">
       {/* Header */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28" style={{ background: BLUE }}>
-        <div className="container-x">
+      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden" style={{ background: BLUE }}>
+        <picture className="absolute inset-0 w-full h-full">
+          <source media="(max-width: 767px)" srcSet={heroMobile} />
+          <img src={heroDesktop} alt="" aria-hidden className="w-full h-full object-cover" />
+        </picture>
+        <div
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(180deg, rgba(8,30,56,0.72) 0%, rgba(8,30,56,0.6) 45%, rgba(8,30,56,0.9) 100%)" }}
+        />
+        <div className="relative container-x">
           <Link to="/" className="text-[11px] tracking-[0.22em] uppercase text-white/70 hover:text-[#EF7320]">
             ← Back to Home
           </Link>

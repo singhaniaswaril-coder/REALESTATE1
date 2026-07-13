@@ -14,7 +14,8 @@ import {
 } from "@/lib/projects";
 import { LEADERS, type Leader } from "@/lib/leadership";
 import { LaunchingSoonMedia } from "@/lib/coming-soon";
-import heroImg from "@/assets/Cover page new.jpg";
+import heroDesktop from "@/assets/covers/desktop.webp";
+import heroMobile from "@/assets/covers/mobile.webp";
 import aboutImg from "@/assets/scaling-ananta/elevation-01.png";
 import whiteLogo from "@/assets/logo-full-white.png";
 
@@ -186,13 +187,16 @@ function Navbar() {
 function Hero() {
   return (
     <section id="home" className="relative min-h-[100svh] flex items-end overflow-hidden">
-      <img
-        src={heroImg}
-        alt="Modern Chennai cityscape at twilight"
-        className="absolute inset-0 w-full h-full object-cover"
-        width={1920}
-        height={1280}
-      />
+      <picture className="absolute inset-0 w-full h-full">
+        <source media="(max-width: 767px)" srcSet={heroMobile} />
+        <img
+          src={heroDesktop}
+          alt="Modern Chennai cityscape at twilight"
+          className="w-full h-full object-cover"
+          width={1920}
+          height={1280}
+        />
+      </picture>
       <div
         className="absolute inset-0"
         style={{ background: "linear-gradient(180deg, rgba(8,30,56,0.55) 0%, rgba(8,30,56,0.35) 40%, rgba(8,30,56,0.88) 100%)" }}
