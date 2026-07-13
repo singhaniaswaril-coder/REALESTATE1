@@ -186,22 +186,27 @@ function Navbar() {
 
 function Hero() {
   return (
-    <section id="home" className="relative min-h-[100svh] flex items-end overflow-hidden">
-      <picture className="absolute inset-0 w-full h-full">
+    <section
+      id="home"
+      className="relative overflow-hidden flex flex-col md:flex-row md:items-end md:min-h-[100svh]"
+      style={{ background: "#081E38" }}
+    >
+      {/* Cover: shown in full (uncropped) on mobile, full-bleed cover on desktop */}
+      <picture className="relative block w-full md:absolute md:inset-0 md:h-full">
         <source media="(max-width: 767px)" srcSet={heroMobile} />
         <img
           src={heroDesktop}
           alt="Modern Chennai cityscape at twilight"
-          className="w-full h-full object-cover"
+          className="block w-full h-auto md:h-full object-cover"
           width={1920}
           height={1280}
         />
       </picture>
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 pointer-events-none"
         style={{ background: "linear-gradient(180deg, rgba(8,30,56,0.55) 0%, rgba(8,30,56,0.35) 40%, rgba(8,30,56,0.88) 100%)" }}
       />
-      <div className="relative container-x w-full pt-32 pb-[240px] md:pb-44">
+      <div className="absolute inset-x-0 top-0 md:static container-x w-full pt-28 md:pt-32 pb-8 md:pb-44">
         <div className="max-w-3xl">
           <Reveal>
             <span className="inline-flex items-center gap-3 text-[11px] tracking-[0.32em] uppercase" style={{ color: ORANGE }}>
@@ -231,8 +236,8 @@ function Hero() {
         </div>
       </div>
 
-      {/* honest stat strip */}
-      <div className="absolute left-0 right-0 bottom-0 border-t border-white/12" style={{ background: "rgba(8,30,56,0.65)", backdropFilter: "blur(8px)" }}>
+      {/* honest stat strip — flows below the poster on mobile, pinned to the bottom on desktop */}
+      <div className="relative md:absolute md:left-0 md:right-0 md:bottom-0 border-t border-white/12" style={{ background: "rgba(8,30,56,0.65)", backdropFilter: "blur(8px)" }}>
         <div className="container-x grid grid-cols-2 md:grid-cols-4">
           {[
             { v: "2024", l: "Established" },
@@ -242,8 +247,10 @@ function Hero() {
           ].map((s, i) => (
             <div
               key={s.l}
-              className="py-6 md:py-7 px-2 md:px-4 text-center md:text-left border-white/10"
-              style={{ borderRightWidth: i < 3 ? 1 : 0, borderRightStyle: "solid" }}
+              className={`py-6 md:py-7 px-2 md:px-4 text-center md:text-left border-white/10 ${
+                // dividers: correct for 2-col (mobile) and 4-col (desktop) without stray edges
+                ["border-r border-b md:border-b-0", "border-b md:border-b-0 md:border-r", "border-r", ""][i]
+              }`}
             >
               <div className="font-display text-3xl md:text-4xl" style={{ color: ORANGE }}>{s.v}</div>
               <div className="mt-1 text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-white/70">{s.l}</div>
